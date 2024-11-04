@@ -3,13 +3,11 @@
 
 #include "trap.h"
 #include "debug.h"
+#include "memory.h"
 
 extern "C" void KMain(void)
 {
-    // char *p = (char *)0xb8000;
-    // p[0x28] = 'C';
-    // p[0x29] = 0xf;
-
     init_idt();
-    // ASSERT(0);
+    init_memory();
+    init_kvm();
 }

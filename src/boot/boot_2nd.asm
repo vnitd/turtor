@@ -39,14 +39,17 @@ setA20LineDone:
 getMemInfoStart:
     xor ebx, ebx
     xor ax, ax
+    mov dword[0x9000], 0
     mov es, ax
-    mov di, 0x9000
+    mov di, 0x9008
     .loop:
         mov eax, 0xe820
         mov ecx, 20
         mov edx, 0x534d4150
         int 0x15
         jc notSupport
+        inc dword[0x9000]
+        add di, 20
  
         cmp edx, 0x534d4150
         jne notSupport
@@ -222,13 +225,18 @@ PMEntry:
     mov esp, 0x7c00
  
     cld
-    mov edi, 0x80000
+    mov edi, 0x70000
     xor eax, eax
     mov ecx, 0x10000/4
     rep stosd
  
-    mov dword[0x80000], 0x81007
-    mov dword[0x81000], 10000111b
+    mov dword[0x70000], 0x71003
+    mov dword[0x71000], 10000011b
+
+    mov eax, (0xffff800000000000>>39)
+    and eax, 0x1ff
+    mov dword[0x70000+eax*8], 0x72003
+    mov dword[0x72000], 10000011b
  
     lgdt [gdt64Ptr]
  
@@ -236,7 +244,7 @@ PMEntry:
     or eax, (1<<5)
     mov cr4, eax
  
-    mov eax, 0x80000
+    mov eax, 0x70000
     mov cr3, eax
  
     mov ecx, 0xc0000080
@@ -261,8 +269,9 @@ LMEntry:
     mov rsi, 0x10000
     mov rcx, 51200/8
     rep movsq
- 
-    jmp 0x200000
+    
+    mov rax, 0xffff800000200000
+    jmp rax
 
  
 exit:

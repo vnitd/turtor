@@ -18,7 +18,7 @@ section .data
 
     tss:
         dd 0
-        dq 0x150000
+        dq 0xffff800000190000
         times 88 db 0
         dd tssLen
     tssLen: equ $-tss
@@ -27,16 +27,18 @@ section .text
     global start
 
     start:
-        lgdt [gdt64Ptr]
+        mov rax, gdt64Ptr
+        lgdt [rax]
     setTss:
         mov rax, tss
-        mov [tssDesc+2], ax
+        mov rdi, tssDesc
+        mov [rdi+2], ax
         shr rax, 16
-        mov [tssDesc+4], al
+        mov [rdi+4], al
         shr rax, 8
-        mov [tssDesc+7], al
+        mov [rdi+7], al
         shr rax, 8
-        mov [tssDesc+8], eax
+        mov [rdi+8], eax
 
         mov ax, 0x20
         ltr ax
@@ -74,15 +76,13 @@ section .text
         mov al, 0b11111111
         out 0xa1, al
 
+        mov rax, KernelEntry
         push 8
-        push KernelEntry
+        push rax
         db 0x48
         retf
     KernelEntry:
-        xor ax, ax
-        mov ss, ax
-        
-        mov rsp, 0x200000
+        mov rsp, 0xffff800000200000
         call KMain
         sti
 

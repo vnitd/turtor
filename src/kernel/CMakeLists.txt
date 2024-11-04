@@ -8,6 +8,7 @@ VNos_compile(${PROJECT_NAME}
     C_FILE   trap.c
     C_FILE   print.c
     C_FILE   debug.c
+    C_FILE   memory.c
     CPP_FILE main.cpp
 )
 

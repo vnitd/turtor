@@ -1,4 +1,5 @@
 #include "trap.h"
+#include "stdint.h"
 
 static struct IdtPtr idt_pointer;
 static struct IdtEntry vectors[256];
@@ -43,8 +44,13 @@ void init_idt(void)
 void handler(struct TrapFrame *tf)
 {
     unsigned char isr_value;
+    uint8_t *p = (uint8_t *)0xffff8000000b8000;
     switch (tf->trapno)
     {
+    case 4:
+        p[0] = '4';
+        p[1] = 0xa;
+        break;
     case 32:
         eoi();
         break;
@@ -58,6 +64,8 @@ void handler(struct TrapFrame *tf)
         break;
 
     default:
+        p[0] = '0' + tf->trapno;
+        p[1] = 0xa;
         while (1)
             ;
     }
