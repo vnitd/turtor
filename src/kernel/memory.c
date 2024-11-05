@@ -29,7 +29,7 @@ void init_memory(void)
             total_mem += mem_map[i].length;
             free_region_count++;
         }
-        printk("%x   %uKB   %u\n", mem_map[i].address, mem_map[i].length / 1024, (uint64_t)mem_map[i].type);
+        // printk("%x   %uKB   %u\n", mem_map[i].address, mem_map[i].length / 1024, (uint64_t)mem_map[i].type);
     }
 
     for (int i = 0; i < free_region_count; i++)
@@ -64,13 +64,8 @@ void init_kvm(void)
 {
     setup_kvm();
 
-    uint64_t virtual_address = 0xe0000000;
-    uint64_t physical_address = P2V(0xe0000000); // Map to the same address
-    bool status = map_pages(page_map, virtual_address, virtual_address + PAGE_SIZE, physical_address, PTE_P | PTE_W);
-    ASSERT(status == true);
-
     switch_vm(page_map);
-    printk("Memory manager is working now, mapped VA %x to PA %x\n", virtual_address, physical_address);
+    printk("Memory manager is working now");
 }
 
 void switch_vm(uint64_t map)

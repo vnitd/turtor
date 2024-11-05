@@ -5,10 +5,13 @@ VNos_compile(${PROJECT_NAME}
     ASM_FILE kernel.asm
     ASM_FILE trap.asm
     ASM_FILE libs/lib.asm
+    ASM_FILE libs/io.asm
+    ASM_FILE drivers/graphics/vbe.asm
     C_FILE   trap.c
     C_FILE   print.c
     C_FILE   debug.c
     C_FILE   memory.c
+    C_FILE   drivers/graphics/vbe.c
     CPP_FILE main.cpp
 )
 

@@ -174,8 +174,7 @@ setupGDT:
     mov cr0, eax
  
     jmp 0x08:PMEntry
- 
- 
+
 vbeError:
     mov si, vbeErrorMsg
     call print_string
