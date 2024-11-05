@@ -33,7 +33,7 @@ function(VNos_compile_c)
 
         add_custom_command(
             OUTPUT  ${bin_file}
-            COMMAND ${C_COMMAND} ${C_FLAGS} -o ${bin_file} -c ${c_file}
+            COMMAND ${C_COMMAND} ${C_FLAGS} -I${ARG_CURRENT_SRC_DIR} -o ${bin_file} -c ${c_file}
             DEPENDS ${c_file}
             COMMENT "[0m[97m[ [1m[91mC      [0m[97m] [94mBuilt object: ${bin_file}"
         )
@@ -82,7 +82,7 @@ function(VNos_compile_cpp)
 
         add_custom_command(
             OUTPUT  ${bin_file}
-            COMMAND ${CPP_COMMAND} ${CPP_FLAGS} -o ${bin_file} -c ${cpp_file}
+            COMMAND ${CPP_COMMAND} ${CPP_FLAGS} -I${ARG_CURRENT_SRC_DIR} -o ${bin_file} -c ${cpp_file}
             DEPENDS ${cpp_file}
             COMMENT "[0m[97m[ [1m[91mCPP    [0m[97m] [94mBuilt object: ${bin_file}"
         )

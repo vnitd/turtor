@@ -3,11 +3,10 @@
 
 #include "trap.h"
 #include "debug.h"
-#include "memory.h"
+#include "core/physic_memory.h"
 
 extern "C" void KMain(void)
 {
     init_idt();
-    init_memory();
-    init_kvm();
+    init_physic_memory();
 }
