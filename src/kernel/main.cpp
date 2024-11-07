@@ -8,5 +8,8 @@
 extern "C" void KMain(void)
 {
     init_idt();
-    init_physic_memory();
+    print_physic_memory();
+
+    uint32_t num_SMAP_entries = *(uint32_t *)0x9000;
+    struct E820 *mem_map = (struct E820 *)0x9008;
 }
