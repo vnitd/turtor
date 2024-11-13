@@ -9,6 +9,7 @@ VNos_compile(${PROJECT_NAME}
     C_FILE   print.c
     C_FILE   debug.c
     CPP_FILE core/physic_memory.cpp
+    CPP_FILE core/virtual_memory.cpp
     CPP_FILE main.cpp
 )
 

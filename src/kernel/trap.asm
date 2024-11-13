@@ -24,6 +24,7 @@ global eoi
 global read_isr
 global load_idt
 global load_cr3
+global load_cr0
 
 trap:
     push rax
@@ -155,4 +156,9 @@ load_idt:
 load_cr3:
     mov rax, rdi
     mov cr3, rax
+    ret              ; Return from the function
+load_cr0:
+    mov rax, cr0
+    or rax, rdi
+    mov cr0, rax
     ret
